@@ -30,7 +30,7 @@ const FIRST_AUTO_UPDATE_LEVEL = 20;
 const MAX_AUTO_UPDATE_LEVEL = 50;
 
 // Auto Upgrade Options
-const UPGRADE_INTERVAL_MINUTES = 1;
+const STORE_UPGRADE_INTERVAL_MINUTES = 1;
 
 // Grimoire Options
 const GRIMOIRE_DESIRED_SPELL_USAGE = 0;
@@ -202,11 +202,30 @@ function checkAutoShopUpdates(){
 }
 
 
+function autoUpgradeStore(){
+    const DIV_ID_UPGRADES = 'upgrades';
+    const DIV_CLASS_UPGRADES_ENABLED = '.crate.upgrade.enabled';
+    const divElement = document.getElementById(DIV_ID_UPGRADES);
+    const elements = divElement.querySelectorAll(DIV_CLASS_UPGRADES_ENABLED);
+    if(!elements){ return false; }
+
+    for (const element of elements){
+        try {
+            element.click();
+            console.info(`${displayCurrentDateTime()} - Upgrade was done`);
+        } catch (error) {
+            console.error(`${displayCurrentDateTime()} - Failed to do an upgrade:`, error);
+        }
+    }
+}
+
+
 function main(){
     setInterval(clickBigCookie, CLICK_BIGCOOKIE_INTERVAL_MS);
     setInterval(clickBonusCookie, CLICK_BONUSCOOKIE_INTERVAL_SECS * 1000);
     setInterval(useGrimoireMagic, USE_MAGIC_INTERVAL_MINUTES * 60 * 1000);
     setInterval(checkAutoShopUpdates, AUTO_UPDATE_INTERVAL_MINUTES * 60 * 1000);
+    setInterval(autoUpgradeStore, STORE_UPGRADE_INTERVAL_MINUTES * 60 * 1000);
 }
 
 main();
