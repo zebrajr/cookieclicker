@@ -25,7 +25,7 @@ const CLICK_BONUSCOOKIE_INTERVAL_SECS = 5;
 
 // Auto Updater Options
 const ENABLE_AUTO_SHOP_UPDATER = true;
-const AUTO_UPDATE_INTERVAL_MINUTES = 10;
+const AUTO_UPDATE_INTERVAL_MINUTES = 1;
 const FIRST_AUTO_UPDATE_LEVEL = 20;
 const MAX_AUTO_UPDATE_LEVEL = 50;
 
@@ -209,13 +209,17 @@ function autoUpgradeStore(){
     const elements = divElement.querySelectorAll(DIV_CLASS_UPGRADES_ENABLED);
     if(!elements){ return false; }
 
+    let upgradesDone = 0;
     for (const element of elements){
         try {
             element.click();
-            console.info(`${displayCurrentDateTime()} - Upgrade was done`);
+            upgradesDone++;
         } catch (error) {
             console.error(`${displayCurrentDateTime()} - Failed to do an upgrade:`, error);
         }
+    }
+    if (upgradesDone > 0){
+        console.info(`${displayCurrentDateTime()} - Upgrades done: ${upgradesDone}`);
     }
 }
 
