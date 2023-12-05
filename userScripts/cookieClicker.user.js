@@ -27,7 +27,7 @@ const CLICK_BONUSCOOKIE_INTERVAL_SECS = 5;
 const ENABLE_AUTO_SHOP_UPDATER = true;
 const AUTO_UPDATE_INTERVAL_MINUTES = 1;
 const FIRST_AUTO_UPDATE_LEVEL = 20;
-const MAX_AUTO_UPDATE_LEVEL = 50;
+const MAX_AUTO_UPDATE_LEVEL = 100;
 
 // Auto Upgrade Options
 const STORE_UPGRADE_INTERVAL_MINUTES = 1;
@@ -67,7 +67,9 @@ async function clickBigCookie() {
  * @returns {Promise}
  */
 async function clickBonusCookie() {
+    const BONUS_ALT_VALUES = ['Golden cookie', 'Reindeer'];
     const GOLDEN_COOKIE_ALT_VALUE ='Golden cookie';
+    const REINDEER_ALT_VALUE = 'Reindeer';
     const shimmersDiv = document.getElementById('shimmers');
     if(!shimmersDiv){
         return false;
@@ -76,13 +78,13 @@ async function clickBonusCookie() {
     const childElements = shimmersDiv.querySelectorAll('*');
 
     for (const element of childElements){
-        if(element.attributes.alt.value === GOLDEN_COOKIE_ALT_VALUE){
+        if (BONUS_ALT_VALUES.includes(element.attributes.alt.value)){
             element.click();
-            //console.info(`${displayCurrentDateTime()} - Clicked a Bonus Cookie!`);
-        } else {
-            console.info(element);
-            console.info(element.attributes.alt.value);
+            //console.info(`${displayCurrentDateTime()} - Clicked a ${element.attributes.alt.value}!`);
+            continue;
         }
+        console.info(element);
+        console.info(element.attributes.alt.value);
     }
 }
 
